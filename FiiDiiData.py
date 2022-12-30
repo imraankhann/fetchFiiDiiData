@@ -1,8 +1,4 @@
-from pytz import timezone
 import datetime
-import telegram
-import numpy as np
-import pandas as pd
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
 from time import sleep
