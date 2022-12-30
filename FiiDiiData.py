@@ -1,7 +1,6 @@
 from pytz import timezone
 import datetime
 import telegram
-import schedule
 import numpy as np
 import pandas as pd
 from googleapiclient.discovery import build
