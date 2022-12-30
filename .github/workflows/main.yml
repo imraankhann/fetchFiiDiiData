@@ -1,9 +1,9 @@
 name: run FiiDiiData.py
 
 on:
-  #  workflow_dispatch
-  schedule:
-    - cron: "0 14 * * MON-FRI" # Runs at 7.30pm for Monday - Friday
+  workflow_dispatch
+  # schedule:
+  #   - cron: "0 14 * * MON-FRI" # Runs at 7.30pm for Monday - Friday
 
 jobs:
   build:
