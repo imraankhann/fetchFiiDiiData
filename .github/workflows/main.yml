@@ -1,4 +1,4 @@
-name: run imrnseOptionChain.py
+name: run FiiDiiData.py
 
 on:
   #  workflow_dispatch
