@@ -32,13 +32,13 @@ service = build('sheets', 'v4', credentials=creds)
 # Call the sheet api
 sheet = service.spreadsheets()
 
-# request = sheet.values().update(spreadsheetId=SAMPLE_SHEET_ID, range="Yday!B1",
-#                                 valueInputOption="USER_ENTERED", body={"values": dtYesterLst}).execute()
-# request = sheet.values().update(spreadsheetId=SAMPLE_SHEET_ID, range="Today!B1",
-#                                 valueInputOption="USER_ENTERED", body={"values": dtTodayLst}).execute()
-# print("Waiting for 15 seconds started....!")
-# sleep(15)
-# print("Wait for 15 seconds completed..!")
+request = sheet.values().update(spreadsheetId=SAMPLE_SHEET_ID, range="Yday!B1",
+                                valueInputOption="USER_ENTERED", body={"values": dtYesterLst}).execute()
+request = sheet.values().update(spreadsheetId=SAMPLE_SHEET_ID, range="Today!B1",
+                                valueInputOption="USER_ENTERED", body={"values": dtTodayLst}).execute()
+print("Waiting for 15 seconds started....!")
+sleep(15)
+print("Wait for 15 seconds completed..!")
 result = sheet.values().get(spreadsheetId=SAMPLE_SHEET_ID,
                             range="MasterComparison!A11:D16").execute()
 values = result.get('values', [])
