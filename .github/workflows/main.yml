@@ -24,6 +24,7 @@ jobs:
           pip3 install requests
           pip3 install pytz
           pip3 install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+          pip3 install python-telegram-bot
 
       - name: execute py script # run main.py
         run: python FiiDiiData.py
