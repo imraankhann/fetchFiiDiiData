@@ -1,6 +1,7 @@
 from pickle import NONE
 import time
 from httplib2 import Credentials
+import pytz
 import requests
 import json
 import math
@@ -64,9 +65,9 @@ fin_pe_levels = findf_pe['PE_Range'].loc[findf_pe.index[2]]
 bot = Bot(token=nse_ch_token)
 
 #Notify Index values To Telegram Channel before 9AM
-if intTime==12 and intSec in range(30,59):
+if intTime==9 and intSec in range(15,30):
 #if intTime==16 and intSec in range(15,35):
-    t_url = "https://api.telegram.org/bot6377307246:AAEuJAlBiQgDQEa03yNmKQJmZbXyQ0WINOk/sendMessage?chat_id=-996001230&text="+"======================\n"+nowTime+"\n======================"+"\nWELCOME TO AI BOT TRADING"+"\n======================"+"\nBOT STARTED SUCCESSFULLY..!"+"\n======================\n"+"TODAY's INDEX LEVELS\n"+"======================\n"+"NIFTY CE LEVEL: "+str(nse_CE_Range)+"\n"+"=========================\n"+"NIFTY PE LEVEL: "+str(nse_pe_levels)+"\n"+"=========================\n"+"BNF CE LEVEL: "+str(bnf_CE_Range)+"\n=========================\n"+"BNF PE LEVEL: "+str(bnf_pe_levels)+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE."+"\n----------------------------------------------"+"\nI AM NOT SEBI REG..!"+"\n-----------------------------------"+"\nTRADE AT YOUR OWN RISK..!"+"\n---------------------------------\n"+"WISH YOU PROFITABLE DAY..!"
+    t_url = "https://api.telegram.org/bot6377307246:AAEuJAlBiQgDQEa03yNmKQJmZbXyQ0WINOk/sendMessage?chat_id=-996001230&text="+"======================\n"+nowTime+"\n======================"+"\nWELCOME TO AI BOT TRADING"+"\n======================"+"\nBOT STARTED SUCCESSFULLY..!"+"\n======================\n"+"TODAY's INDEX LEVELS\n"+"======================\n"+"NIFTY CE LEVEL: "+str(nse_ce_levels)+"\n"+"=========================\n"+"NIFTY PE LEVEL: "+str(nse_pe_levels)+"\n"+"=========================\n"+"BNF CE LEVEL: "+str(bnf_ce_levels)+"\n=========================\n"+"BNF PE LEVEL: "+str(bnf_pe_levels)+"\n=========================\n"+"FIN CE LEVEL: "+str(fin_ce_levels)+"\n=========================\n"+"FIN PE LEVEL: "+str(fin_pe_levels)+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE."+"\n----------------------------------------------"+"\nI AM NOT SEBI REG..!"+"\n-----------------------------------"+"\nTRADE AT YOUR OWN RISK..!"+"\n---------------------------------\n"+"WISH YOU PROFITABLE DAY..!"
     #t_url = "https://api.telegram.org/bot5771720913:AAH0A70f0BPtPjrOCTrhAb9LR7IGFBVt-oM/sendMessage?chat_id=-703180529&text="+"======================\n"+nowTime+"\n======================"+"\nWELCOME TO AI BOT TRADING"+"\n======================"+"\nBOT STARTED SUCCESSFULLY..!"+"\n======================\n"+"TODAY's INDEX LEVELS\n"+"======================\n"+"NIFTY CE LEVEL: "+str(nse_CE_Range)+"\n"+"=========================\n"+"NIFTY PE LEVEL: "+str(nse_pe_levels)+"\n"+"=========================\n"+"BNF CE LEVEL: "+str(bnf_CE_Range)+"\n=========================\n"+"BNF PE LEVEL: "+str(bnf_pe_levels)+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE."+"\n----------------------------------------------"+"\nI AM NOT SEBI REG..!"+"\n-----------------------------------"+"\nTRADE AT YOUR OWN RISK..!"+"\n---------------------------------\n"+"WISH YOU PROFITABLE DAY..!"
     requests.post(t_url) 
     #asyncio.run(bot.send_message(chat_id=nse_ch_id,text="======================\n"+nowTime+"\n======================"+"\nWELCOME TO AI BOT TRADING"+"\n======================"+"\nBOT STARTED SUCCESSFULLY..!"+"\n======================\n"+"TODAY's INDEX LEVELS\n"+"======================\n"+"NIFTY RES LEVEL: "+str(nse_ce_levels)+"\n"+"=========================\n"+"NIFTY SUP LEVEL: "+str(nse_pe_levels)+"\n"+"=========================\n"+"BNF RES LEVEL: "+str(bnf_ce_levels)+"\n=========================\n"+"BNF SUP LEVEL: "+str(bnf_pe_levels)+"\n=========================\n"+"FIN RES LEVEL: "+str(fin_ce_levels)+"\n=========================\n"+"FIN SUP LEVEL: "+str(fin_pe_levels)+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE.\n"+"=========================\n"+"TRADE ONLY BTW 9:15 AM - 3:15 PM"+"\n----------------------------"+"\nI AM NOT SEBI REG..!"+"\n------------------------------"+"\nTRADE AT YOUR OWN RISK..!"+"\n----------------------------\n"+"WISH YOU PROFITABLE DAY..!"+"\n------------------------------"))
@@ -78,7 +79,10 @@ if intTime >= 9 and intTime < 14:
         while(intTime<15 ):
             if intTime>14:
                 break;
-            c = datetime.now()
+            c = datetime.now(tz=pytz.timezone('Asia/Kolkata'))
+            print("Timzone: ",c)
+            runTime = c.strftime('%H:%M:%S')
+            print("RunTime: ",runTime)
             runTime = c.strftime('%H:%M:%S')
             print("Nifty CE Levels : ",nse_ce_levels)
             print("Nifty PE Levels : ",nse_pe_levels)
@@ -89,22 +93,22 @@ if intTime >= 9 and intTime < 14:
 
             nifty_ce_minus_range = nse_ce_levels - 10 
             print("Nifty CE minus range : ",nifty_ce_minus_range)
-            nifty_ce_plus_range = nse_ce_levels + 5
+            nifty_ce_plus_range = nse_ce_levels + 10
             print("Nifty CE plus range : ", nifty_ce_plus_range)
 
-            nifty_pe_minus_range = nse_pe_levels - 5 
+            nifty_pe_minus_range = nse_pe_levels - 10 
             print("Nifty PE minus range : ",nifty_pe_minus_range)
             nifty_pe_plus_range = nse_ce_levels + 10
             print("Nifty PE plus range : ", nifty_pe_plus_range)
 
-            bnf_ce_minus_range = bnf_ce_levels - 10 
+            bnf_ce_minus_range = bnf_ce_levels - 15
             print("Bnf CE minus range : ",bnf_ce_minus_range)
-            bnf_ce_plus_range = bnf_ce_levels + 10
+            bnf_ce_plus_range = bnf_ce_levels + 15
             print("Bnf CE plus range : ", bnf_ce_plus_range)
 
-            bnf_pe_minus_range = bnf_pe_levels - 10 
+            bnf_pe_minus_range = bnf_pe_levels - 15 
             print("Bnf PE minus range : ",bnf_pe_minus_range)
-            bnf_pe_plus_range = bnf_pe_levels + 10
+            bnf_pe_plus_range = bnf_pe_levels + 15
             print("Bnf PE plus range : ", bnf_pe_plus_range)
             
             finN_ce_minus_range = fin_ce_levels - 10 
@@ -116,7 +120,19 @@ if intTime >= 9 and intTime < 14:
             print("Fin PE minus range : ",finN_pe_minus_range)
             finN_pe_plus_range = fin_pe_levels + 10
             print("Fin PE plus range : ", finN_pe_plus_range)
+            
+            nf_level_range = range(nse_pe_levels, nse_ce_levels)
+            nf_ce_minus_plus_range = range(nifty_ce_minus_range, nifty_ce_plus_range)
+            nf_pe_minus_plus_range = range(nifty_pe_minus_range, nifty_pe_plus_range)
 
+            bnf_level_range = range(bnf_pe_levels, bnf_ce_levels)
+            bnf_ce_minus_plus_range = range(bnf_ce_minus_range, bnf_ce_plus_range)
+            bnf_pe_minus_plus_range = range(bnf_pe_minus_range,bnf_pe_plus_range)
+
+            fin_level_range=range(fin_pe_levels, fin_ce_levels)
+            fin_ce_minus_plus_range = range(finN_ce_minus_range, finN_ce_plus_range)
+            fin_pe_minus_plus_range = range(finN_pe_minus_range,finN_pe_plus_range)
+            
 
             # Method to get nearest strikes
             def round_nearest(x, num=50): return int(math.ceil(float(x)/num)*num)
@@ -244,39 +260,39 @@ if intTime >= 9 and intTime < 14:
             print("Counter : ", counter)
         
 
-            if(niftyLastPrice in range(nse_ce_levels, nse_pe_levels) and niftyLastPrice in range(nifty_ce_plus_range, nifty_ce_minus_range)):
-                t_url = "https://api.telegram.org/bot5771720913:AAH0A70f0BPtPjrOCTrhAb9LR7IGFBVt-oM/sendMessage?chat_id=-703180529&text="+"======================\n"+dt[0]+"-"+runTime+"\n======================\n"+"PYTHON-BOT FOR TODAY's LEVELS\n"+"======================\n"+"NIFYT CMP : "+str(niftyLastPrice)+"\n======================\n"+"NIFTY TRADING NEAR BO LEVEL: "+str(nifty_ce_plus_range)+"\n"+"\n=========================\n"+"CHOOSE STRIKE : "+str(nearest_strike_nf(nf_ul))+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE.\n"+"---------------------------------\n"+"I AM NOT SEBI REG..!"+"\n----------------------------------"+"\nTRADE AT YOUR OWN RISK..!"
+            if(niftyLastPrice in range(nse_pe_levels, nse_ce_levels) and niftyLastPrice in range(nifty_ce_minus_range, nifty_ce_plus_range)):
+                t_url = "https://api.telegram.org/bot6377307246:AAEuJAlBiQgDQEa03yNmKQJmZbXyQ0WINOk/sendMessage?chat_id=-996001230&text="+"======================\n"+dt[0]+"-"+runTime+"\n======================\n"+"PYTHON-BOT FOR TODAY's NIFTY LEVELS\n"+"======================\n"+"NIFYT CMP : "+str(niftyLastPrice)+"\n======================\n"+"NIFTY TRADING NEAR BO LEVEL: "+str(nifty_ce_plus_range)+"\n"+"\n=========================\n"+"CHOOSE STRIKE : "+str(nearest_strike_nf(nf_ul))+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE.\n"+"---------------------------------\n"+"I AM NOT SEBI REG..!"+"\n----------------------------------"+"\nTRADE AT YOUR OWN RISK..!"
                 requests.post(t_url)
                 #asyncio.run(bot.send_message(chat_id=nse_ch_id,text="======================\n"+dt[0]+"-"+runTime+"\n======================\n"+"PYTHON-BOT FOR TODAY's LEVELS\n"+"======================\n"+"NIFTY CMP : "+str(niftyLastPrice)+"\n======================\n"+"NIFTY TRADING NEAR RES LEVEL: "+str(nifty_ce_plus_range)+"\n"+"\n=========================\n"+"CHOOSE STRIKE : "+str(nearest_strike_nf(nf_ul))+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE.\n"+"=========================\n"+"TRADE BTW 9:15 AM - 3:15 PM"+"\n---------------------------------\n"+"I AM NOT SEBI REG..!"+"\n----------------------------------"+"\nTRADE AT YOUR OWN RISK..!"))
 
-            if(niftyLastPrice in range(nse_ce_levels, nse_pe_levels) and niftyLastPrice in range(nifty_pe_plus_range, nifty_pe_minus_range)):
-                t_url = "https://api.telegram.org/bot5771720913:AAH0A70f0BPtPjrOCTrhAb9LR7IGFBVt-oM/sendMessage?chat_id=-703180529&text="+"======================\n"+dt[0]+"-"+runTime+"\n======================\n"+"PYTHON-BOT FOR TODAY's LEVELS\n"+"======================\n"+"NIFYT CMP : "+str(niftyLastPrice)+"\n======================\n"+"NIFTY TRADING NEAR BO LEVEL: "+str(nifty_pe_minus_range)+"\n"+"\n=========================\n"+"CHOOSE STRIKE : "+str(nearest_strike_nf(nf_ul))+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE.\n"+"-----------------------------------\n"+"I AM NOT SEBI REG..!"+"\n---------------------------------"+"\nTRADE AT YOUR OWN RISK..!"
+            if(niftyLastPrice in range(nse_pe_levels, nse_ce_levels) or niftyLastPrice in range(nifty_pe_minus_range, nifty_pe_plus_range)):
+                t_url = "https://api.telegram.org/bot6377307246:AAEuJAlBiQgDQEa03yNmKQJmZbXyQ0WINOk/sendMessage?chat_id=-996001230&text="+"======================\n"+dt[0]+"-"+runTime+"\n======================\n"+"PYTHON-BOT FOR TODAY's NIFTY LEVELS\n"+"======================\n"+"NIFYT CMP : "+str(niftyLastPrice)+"\n======================\n"+"NIFTY TRADING NEAR BO LEVEL: "+str(nifty_pe_minus_range)+"\n"+"\n=========================\n"+"CHOOSE STRIKE : "+str(nearest_strike_nf(nf_ul))+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE.\n"+"-----------------------------------\n"+"I AM NOT SEBI REG..!"+"\n---------------------------------"+"\nTRADE AT YOUR OWN RISK..!"
                 requests.post(t_url)
                 #asyncio.run(bot.send_message(chat_id=nse_ch_id,text="======================\n"+dt[0]+"-"+runTime+"\n======================\n"+"PYTHON-BOT FOR TODAY's LEVELS\n"+"======================\n"+"NIFTY CMP : "+str(niftyLastPrice)+"\n======================\n"+"NIFTY TRADING NEAR SUP LEVEL: "+str(nifty_pe_minus_range)+"\n"+"\n=========================\n"+"CHOOSE STRIKE : "+str(nearest_strike_nf(nf_ul))+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE.\n"+"=========================\n"+"TRADE BTW 9:15 AM - 3:15 PM"+"-----------------------------------\n"+"I AM NOT SEBI REG..!"+"\n---------------------------------"+"\nTRADE AT YOUR OWN RISK..!"))
         
 
-            if(bnfLastPrice in range(bnf_ce_levels, bnf_pe_levels) and bnfLastPrice in range(bnf_ce_plus_range, bnf_ce_minus_range)):
-                t_url = "https://api.telegram.org/bot5771720913:AAH0A70f0BPtPjrOCTrhAb9LR7IGFBVt-oM/sendMessage?chat_id=-703180529&text="+"======================\n"+dt[0]+"-"+runTime+"\n======================\n"+"PYTHON-BOT FOR TODAY's LEVELS\n"+"======================\n"+"NIFYT CMP : "+str(bnfLastPrice)+"\n======================\n"+"NIFTY TRADING NEAR BO LEVEL: "+str(bnf_ce_plus_range)+"\n"+"\n=========================\n"+"CHOOSE STRIKE : "+str(nearest_strike_nf(bnf_ul))+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE.\n"+"---------------------------------\n"+"I AM NOT SEBI REG..!"+"\n----------------------------------"+"\nTRADE AT YOUR OWN RISK..!"
+            if(bnfLastPrice in range(bnf_pe_levels, bnf_ce_levels) or bnfLastPrice in range(bnf_ce_minus_range, bnf_ce_plus_range)):
+                t_url = "https://api.telegram.org/bot6377307246:AAEuJAlBiQgDQEa03yNmKQJmZbXyQ0WINOk/sendMessage?chat_id=-996001230&text="+"======================\n"+dt[0]+"-"+runTime+"\n======================\n"+"PYTHON-BOT FOR TODAY's BNF LEVELS\n"+"======================\n"+"BNK-NIFYT CMP : "+str(bnfLastPrice)+"\n======================\n"+"BNK-NIFTY TRADING NEAR BO LEVEL: "+str(bnf_ce_plus_range)+"\n"+"\n=========================\n"+"CHOOSE STRIKE : "+str(nearest_strike_nf(bnf_ul))+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE.\n"+"---------------------------------\n"+"I AM NOT SEBI REG..!"+"\n----------------------------------"+"\nTRADE AT YOUR OWN RISK..!"
                 requests.post(t_url)
                 #asyncio.run(bot.send_message(chat_id=nse_ch_id,text="======================\n"+dt[0]+"-"+runTime+"\n======================\n"+"PYTHON-BOT FOR TODAY's LEVELS\n"+"======================\n"+"BNF CMP : "+str(bnfLastPrice)+"\n======================\n"+"BNF TRADING NEAR RES LEVEL: "+str(bnf_ce_plus_range)+"\n"+"\n=========================\n"+"CHOOSE STRIKE : "+str(nearest_strike_nf(bnf_ul))+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE.\n"+"=========================\n"+"TRADE BTW 9:15 AM - 3:15 PM"+"---------------------------------\n"+"I AM NOT SEBI REG..!"+"\n----------------------------------"+"\nTRADE AT YOUR OWN RISK..!"))
 
-            if(bnfLastPrice in range(bnf_ce_levels, bnf_pe_levels) and bnfLastPrice in range(bnf_pe_plus_range, bnf_pe_minus_range)):
-              t_url = "https://api.telegram.org/bot5771720913:AAH0A70f0BPtPjrOCTrhAb9LR7IGFBVt-oM/sendMessage?chat_id=-703180529&text="+"======================\n"+dt[0]+"-"+runTime+"\n======================\n"+"PYTHON-BOT FOR TODAY's LEVELS\n"+"======================\n"+"NIFYT CMP : "+str(bnfLastPrice)+"\n======================\n"+"NIFTY TRADING NEAR BO LEVEL: "+str(bnf_pe_minus_range)+"\n"+"\n=========================\n"+"CHOOSE STRIKE : "+str(nearest_strike_nf(bnf_ul))+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE.\n"+"-----------------------------------\n"+"I AM NOT SEBI REG..!"+"\n---------------------------------"+"\nTRADE AT YOUR OWN RISK..!"
+            if(bnfLastPrice in range(bnf_pe_levels, bnf_ce_levels) or bnfLastPrice in range(bnf_pe_minus_range, bnf_pe_plus_range)):
+              t_url = "https://api.telegram.org/bot6377307246:AAEuJAlBiQgDQEa03yNmKQJmZbXyQ0WINOk/sendMessage?chat_id=-996001230&text="+"======================\n"+dt[0]+"-"+runTime+"\n======================\n"+"PYTHON-BOT FOR TODAY's BNF LEVELS\n"+"======================\n"+"BNK-NIFYT CMP : "+str(bnfLastPrice)+"\n======================\n"+"BNK-NIFTY TRADING NEAR BO LEVEL: "+str(bnf_pe_minus_range)+"\n"+"\n=========================\n"+"CHOOSE STRIKE : "+str(nearest_strike_nf(bnf_ul))+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE.\n"+"-----------------------------------\n"+"I AM NOT SEBI REG..!"+"\n---------------------------------"+"\nTRADE AT YOUR OWN RISK..!"
               requests.post(t_url)
                # asyncio.run(bot.send_message(chat_id=nse_ch_id,text="======================\n"+dt[0]+"-"+runTime+"\n======================\n"+"PYTHON-BOT FOR TODAY's LEVELS\n"+"======================\n"+"BNF CMP : "+str(bnfLastPrice)+"\n======================\n"+"BNF TRADING NEAR SUP LEVEL: "+str(bnf_pe_minus_range)+"\n"+"\n=========================\n"+"CHOOSE STRIKE : "+str(nearest_strike_nf(bnf_ul))+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE.\n"+"=========================\n"+"TRADE BTW 9:15 AM - 3:15 PM"+"-----------------------------------\n"+"I AM NOT SEBI REG..!"+"\n---------------------------------"+"\nTRADE AT YOUR OWN RISK..!"))
 
-            if(finLastPrice in range(fin_ce_levels, fin_pe_levels) and finLastPrice in range(finN_ce_plus_range, finN_ce_minus_range)):
-                t_url = "https://api.telegram.org/bot5771720913:AAH0A70f0BPtPjrOCTrhAb9LR7IGFBVt-oM/sendMessage?chat_id=-703180529&text="+"======================\n"+dt[0]+"-"+runTime+"\n======================\n"+"PYTHON-BOT FOR TODAY's LEVELS\n"+"======================\n"+"NIFYT CMP : "+str(bnfLastPrice)+"\n======================\n"+"NIFTY TRADING NEAR BO LEVEL: "+str(bnf_ce_plus_range)+"\n"+"\n=========================\n"+"CHOOSE STRIKE : "+str(nearest_strike_nf(bnf_ul))+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE.\n"+"---------------------------------\n"+"I AM NOT SEBI REG..!"+"\n----------------------------------"+"\nTRADE AT YOUR OWN RISK..!"
+            if(finLastPrice in range(fin_pe_levels, fin_ce_levels) or finLastPrice in range(finN_ce_minus_range, finN_ce_plus_range)):
+                t_url = "https://api.telegram.org/bot6377307246:AAEuJAlBiQgDQEa03yNmKQJmZbXyQ0WINOk/sendMessage?chat_id=-996001230&text="+"======================\n"+dt[0]+"-"+runTime+"\n======================\n"+"PYTHON-BOT FOR TODAY's FINNFITY LEVELS\n"+"======================\n"+"FIN-NIFYT CMP : "+str(finLastPrice)+"\n======================\n"+"FINNIFTY TRADING NEAR BO LEVEL: "+str(finN_ce_plus_range)+"\n"+"\n=========================\n"+"CHOOSE STRIKE : "+str(nearest_strike_nf(fin_ul))+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE.\n"+"---------------------------------\n"+"I AM NOT SEBI REG..!"+"\n----------------------------------"+"\nTRADE AT YOUR OWN RISK..!"
                 requests.post(t_url)
                 #asyncio.run(bot.send_message(chat_id=nse_ch_id,text="======================\n"+dt[0]+"-"+runTime+"\n======================\n"+"PYTHON-BOT FOR TODAY's LEVELS\n"+"======================\n"+"BNF CMP : "+str(bnfLastPrice)+"\n======================\n"+"BNF TRADING NEAR RES LEVEL: "+str(bnf_ce_plus_range)+"\n"+"\n=========================\n"+"CHOOSE STRIKE : "+str(nearest_strike_nf(bnf_ul))+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE.\n"+"=========================\n"+"TRADE BTW 9:15 AM - 3:15 PM"+"---------------------------------\n"+"I AM NOT SEBI REG..!"+"\n----------------------------------"+"\nTRADE AT YOUR OWN RISK..!"))
 
-            if(finLastPrice in range(fin_ce_levels, fin_pe_levels) and finLastPrice in range(finN_pe_plus_range, finN_pe_minus_range)):
-              t_url = "https://api.telegram.org/bot5771720913:AAH0A70f0BPtPjrOCTrhAb9LR7IGFBVt-oM/sendMessage?chat_id=-703180529&text="+"======================\n"+dt[0]+"-"+runTime+"\n======================\n"+"PYTHON-BOT FOR TODAY's LEVELS\n"+"======================\n"+"NIFYT CMP : "+str(bnfLastPrice)+"\n======================\n"+"NIFTY TRADING NEAR BO LEVEL: "+str(bnf_pe_minus_range)+"\n"+"\n=========================\n"+"CHOOSE STRIKE : "+str(nearest_strike_nf(bnf_ul))+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE.\n"+"-----------------------------------\n"+"I AM NOT SEBI REG..!"+"\n---------------------------------"+"\nTRADE AT YOUR OWN RISK..!"
+            if(finLastPrice in range(fin_pe_levels, fin_ce_levels) and finLastPrice in range(finN_pe_minus_range, finN_pe_plus_range)):
+              t_url = "https://api.telegram.org/bot6377307246:AAEuJAlBiQgDQEa03yNmKQJmZbXyQ0WINOk/sendMessage?chat_id=-996001230&text="+"======================\n"+dt[0]+"-"+runTime+"\n======================\n"+"PYTHON-BOT FOR TODAY's FINNIFTY LEVELS\n"+"======================\n"+"FIN-NIFYT CMP : "+str(finLastPrice)+"\n======================\n"+"FINNIFTY TRADING NEAR BO LEVEL: "+str(finN_pe_minus_range)+"\n"+"\n=========================\n"+"CHOOSE STRIKE : "+str(nearest_strike_nf(fin_ul))+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE.\n"+"-----------------------------------\n"+"I AM NOT SEBI REG..!"+"\n---------------------------------"+"\nTRADE AT YOUR OWN RISK..!"
               requests.post(t_url)
                # asyncio.run(bot.send_message(chat_id=nse_ch_id,text="======================\n"+dt[0]+"-"+runTime+"\n======================\n"+"PYTHON-BOT FOR TODAY's LEVELS\n"+"======================\n"+"BNF CMP : "+str(bnfLastPrice)+"\n======================\n"+"BNF TRADING NEAR SUP LEVEL: "+str(bnf_pe_minus_range)+"\n"+"\n=========================\n"+"CHOOSE STRIKE : "+str(nearest_strike_nf(bnf_ul))+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE.\n"+"=========================\n"+"TRADE BTW 9:15 AM - 3:15 PM"+"-----------------------------------\n"+"I AM NOT SEBI REG..!"+"\n---------------------------------"+"\nTRADE AT YOUR OWN RISK..!"))
         
             time.sleep(120)
 
-if(intTime>=14):
+if(intTime>=23):
     print("PROGRAM EXIT AT : ", runTm)
     exit()
