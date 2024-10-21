@@ -8,7 +8,7 @@ from datetime import datetime
 from pytz import timezone
 import numpy as np
 import pandas as pd
-from  telegram import Bot
+#from  telegram import Bot
 import asyncio
 
 # def strRed(skk): return "\033[91m {}\033[00m".format(skk)
@@ -42,9 +42,9 @@ intSec = int(reqSec)
 counter = 0
 
 #b_token = '5817461626:AAHp1IIIMkQGWFTqIuu84lYOoxlO8KS7CZo'
-nse_ch_token = '5771720913:AAH0A70f0BPtPjrOCTrhAb9LR7IGFBVt-oM'
+#nse_ch_token = '5771720913:AAH0A70f0BPtPjrOCTrhAb9LR7IGFBVt-oM'
 #channel_id = '@swingTradeScreenedStocks'
-nse_ch_id = '-703180529'
+#nse_ch_id = '-703180529'
 
 
 #Fetch Updated Index values from csv file
@@ -61,10 +61,10 @@ bnf_pe_levels = bnfdf_pe['PE_Range'].loc[bnfdf_pe.index[1]]
 fin_ce_levels = findf_ce['CE_Range'].loc[findf_ce.index[2]]
 fin_pe_levels = findf_pe['PE_Range'].loc[findf_pe.index[2]]
 
-bot = Bot(token=nse_ch_token)
+#bot = Bot(token=nse_ch_token)
 
 #Notify Index values To Telegram Channel before 9AM
-if intTime==12 and intSec in range(30,59):
+if intTime==9 and intSec in range(30,50):
 #if intTime==16 and intSec in range(15,35):
     t_url = "https://api.telegram.org/bot6377307246:AAEuJAlBiQgDQEa03yNmKQJmZbXyQ0WINOk/sendMessage?chat_id=-996001230&text="+"======================\n"+nowTime+"\n======================"+"\nWELCOME TO AI BOT TRADING"+"\n======================"+"\nBOT STARTED SUCCESSFULLY..!"+"\n======================\n"+"TODAY's INDEX LEVELS\n"+"======================\n"+"NIFTY CE LEVEL: "+str(nse_CE_Range)+"\n"+"=========================\n"+"NIFTY PE LEVEL: "+str(nse_pe_levels)+"\n"+"=========================\n"+"BNF CE LEVEL: "+str(bnf_CE_Range)+"\n=========================\n"+"BNF PE LEVEL: "+str(bnf_pe_levels)+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE."+"\n----------------------------------------------"+"\nI AM NOT SEBI REG..!"+"\n-----------------------------------"+"\nTRADE AT YOUR OWN RISK..!"+"\n---------------------------------\n"+"WISH YOU PROFITABLE DAY..!"
     #t_url = "https://api.telegram.org/bot5771720913:AAH0A70f0BPtPjrOCTrhAb9LR7IGFBVt-oM/sendMessage?chat_id=-703180529&text="+"======================\n"+nowTime+"\n======================"+"\nWELCOME TO AI BOT TRADING"+"\n======================"+"\nBOT STARTED SUCCESSFULLY..!"+"\n======================\n"+"TODAY's INDEX LEVELS\n"+"======================\n"+"NIFTY CE LEVEL: "+str(nse_CE_Range)+"\n"+"=========================\n"+"NIFTY PE LEVEL: "+str(nse_pe_levels)+"\n"+"=========================\n"+"BNF CE LEVEL: "+str(bnf_CE_Range)+"\n=========================\n"+"BNF PE LEVEL: "+str(bnf_pe_levels)+"\n=========================\n"+"NOTE : ONLY FOR EDUCATIONAL PURPOSE."+"\n----------------------------------------------"+"\nI AM NOT SEBI REG..!"+"\n-----------------------------------"+"\nTRADE AT YOUR OWN RISK..!"+"\n---------------------------------\n"+"WISH YOU PROFITABLE DAY..!"
