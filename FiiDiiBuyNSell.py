@@ -78,7 +78,8 @@ if intTime >= 9 and intTime < 14:
         while(intTime<15 ):
             if intTime>14:
                 break;
-            c = datetime.now(tz=ZoneInfo('Asia/Kolkata'))
+            c = datetime.now(tz=pytz.timezone('Asia/Kolkata'))
+            print("Timzone: ",c)
             runTime = c.strftime('%H:%M:%S')
             print("RunTime: ",runTime)
             print("Nifty CE Levels : ",nse_ce_levels)
