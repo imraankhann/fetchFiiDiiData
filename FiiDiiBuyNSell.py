@@ -78,8 +78,9 @@ if intTime >= 9 and intTime < 14:
         while(intTime<15 ):
             if intTime>14:
                 break;
-            c = datetime.now()
+            c = datetime.now(tz=ZoneInfo('Asia/Kolkata'))
             runTime = c.strftime('%H:%M:%S')
+            print("RunTime: ",runTime)
             print("Nifty CE Levels : ",nse_ce_levels)
             print("Nifty PE Levels : ",nse_pe_levels)
             print("BNF CE Levels : ",bnf_ce_levels)
