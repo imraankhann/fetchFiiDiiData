@@ -297,6 +297,6 @@ if intTime >= 9 and intTime < 14:
         
             time.sleep(120)
 
-            if(intTime>=14 or counter == 73):
+            if(intTime>=14):
                 print("PROGRAM EXIT AT : ", runTm)
                 exit()
