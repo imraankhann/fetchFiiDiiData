@@ -1,9 +1,9 @@
-name: run FiiDiiData.py
+name: run RemoveLogFile.py
 
 on:
   #workflow_dispatch
    schedule:
-     - cron: "0 14 * * MON-FRI" # Runs at 7.30pm for Monday - Friday
+     - cron: "5 18 * * MON-FRI" # Runs at 11 pm for Monday - Friday to delete log file
 
 jobs:
   build:
@@ -20,11 +20,7 @@ jobs:
       - name: install python packages
         run: |
           python -m pip install --upgrade pip
-          python3 -m pip install numpy
-          pip3 install requests
           pip3 install pytz
-          pip3 install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
-          pip3 install install telegram
 
       - name: execute py script # run main.py
-        run: python FiiDiiData.py
+        run: python RemoveLogFile.py

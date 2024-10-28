@@ -12,6 +12,7 @@ import pandas as pd
 #from  telegram import Bot
 import asyncio
 import pytz
+import logging
 
 # def strRed(skk): return "\033[91m {}\033[00m".format(skk)
 # def strGreen(skk): return "\033[92m {}\033[00m".format(skk)
@@ -36,12 +37,15 @@ print(nowTime)
 curWeekday = datetime.today().weekday()
 dtTime = fName.split(" IST")
 dt = dtTime[0].split(" ")
+dtWithOutTime = dt[0].split(" ")
+dateWithOutTime = dtWithOutTime[0]
 isHolidayNxtDay = ""
 reqTime = ocTime[11:16]
 reqSec = ocTime[14:16]
 intTime = int(reqTime[0:2])
 intSec = int(reqSec)
 counter = 0
+logFileName = dateWithOutTime+"-"+"MagicLevel.log"
 
 #b_token = '5817461626:AAHp1IIIMkQGWFTqIuu84lYOoxlO8KS7CZo'
 #nse_ch_token = '5771720913:AAH0A70f0BPtPjrOCTrhAb9LR7IGFBVt-oM'
@@ -63,8 +67,6 @@ bnf_pe_levels = bnfdf_pe['PE_Range'].loc[bnfdf_pe.index[1]]
 fin_ce_levels = findf_ce['CE_Range'].loc[findf_ce.index[2]]
 fin_pe_levels = findf_pe['PE_Range'].loc[findf_pe.index[2]]
 
-#bot = Bot(token=nse_ch_token)
-
 #Notify Index values To Telegram Channel before 9AM
 if intTime==9 and intSec in range(20,50):
 #if intTime==16 and intSec in range(15,55):
@@ -77,7 +79,7 @@ runTm = c.strftime('%H:%M:%S')
 
 #Keep Running below code from 9AM to 3PM
 if intTime >= 9 and intTime < 14:
-#if intTime >= 17 and intTime < 54:
+#if intTime >= 22 and intTime < 54:
         while(intTime<15 ):
             if intTime>14:
                 break;
@@ -250,7 +252,30 @@ if intTime >= 9 and intTime < 14:
             finLastPrice = int(send_finNifty_lastprice())
             print("Run Time : ", runTime)
             print("Counter : ", counter)
-        
+
+            niftyCELog = dt[0]+'-'+runTime+'\t'+'NIFYT CMP : '+str(niftyLastPrice)+'\t'+'NIFTY TRADING NEAR CE BO LEVEL: '+str(nifty_ce_plus_range)+'\t'
+            niftyPELog = dt[0]+'-'+runTime+'\t'+'NIFYT CMP : '+str(niftyLastPrice)+'\t'+'NIFTY TRADING NEAR PE BO LEVEL: '+str(nifty_pe_minus_range)+'\t'
+
+            bnfCELog = dt[0]+'-'+runTime+'\t'+'BNK-NIFYT CMP : '+str(bnfLastPrice)+'\t'+'BNK-NIFTY TRADING NEAR CE BO LEVEL: '+str(bnf_ce_plus_range)+'\t'
+            bnfPELog = dt[0]+'-'+runTime+'\t'+'BNK-NIFYT CMP : '+str(bnfLastPrice)+'\t'+'BNK-NIFTY TRADING NEAR CE BO LEVEL: '+str(bnf_ce_plus_range)+'\t'
+
+            finCELog = dt[0]+'-'+runTime+'\t'+'FIN-NIFYT CMP : '+str(finLastPrice)+'\t'+'FINNIFTY TRADING NEAR CE BO LEVEL: '+str(finN_ce_plus_range)+'\t'
+            finPELog = dt[0]+'-'+runTime+'\t'+'FIN-NIFYT CMP : '+str(finLastPrice)+'\t'+'FINNIFTY TRADING NEAR PE BO LEVEL: '+str(finN_pe_minus_range)+'\t'
+            logging.basicConfig(
+            filename=logFileName,  # File to write logs
+            level=logging.INFO,  # Set the logging level
+            format='%(asctime)s - %(levelname)s - %(message)s'  # Log format
+            )
+            logging.info('\n')
+            logging.info('-------------->>>>>>> LOGS STARTED <<<<<<<<---------------')
+            logging.info(niftyCELog)
+            logging.info(niftyPELog)
+            logging.info(bnfCELog)
+            logging.info(bnfPELog)
+            logging.info(finCELog)
+            logging.info(finPELog)
+            logging.info('-------------->>>>>>> LOGS ENDED <<<<<<<<---------------'+'\n')
+            
 
             if(niftyLastPrice in range(nse_pe_levels, nse_ce_levels) and niftyLastPrice in range(nifty_ce_minus_range, nifty_ce_plus_range)):
                 if niftyLastPrice > nse_ce_levels:
@@ -297,6 +322,6 @@ if intTime >= 9 and intTime < 14:
         
             time.sleep(120)
 
-            if(intTime>=14):
+            if(intTime>=14): 
                 print("PROGRAM EXIT AT : ", runTm)
                 exit()
