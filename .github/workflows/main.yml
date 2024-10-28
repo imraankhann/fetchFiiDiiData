@@ -1,9 +1,9 @@
 name: run RemoveLogFile.py
 
 on:
-  workflow_dispatch
-  # schedule:
-   #  - cron: "5 18 * * MON-FRI" # Runs at 11 pm for Monday - Friday to delete log file
+  #workflow_dispatch
+   schedule:
+     - cron: "5 18 * * MON-FRI" # Runs at 11 pm for Monday - Friday to delete log file
 
 jobs:
   build:
